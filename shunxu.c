@@ -5,6 +5,7 @@
 	> Created Time: 日  4月/19 18:29:22 2026
  ************************************************************************/
  //创建一个顺序表
+//顺序表的优点：随机访问，缓存利用率比较高
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -71,6 +72,61 @@ void SeqListPrint(SL* ps)
         printf("%d ",ps->_a[i]);
     }
     printf("\n");
+}
+
+void SeqListPopBack(SL* ps)
+{
+    assert(ps);
+
+    ps->size--;
+
+}
+
+void SeqListPushFront(SL* ps)
+{
+    assert(ps);
+
+}
+
+void SeqListDestory(SL* ps)
+{
+    free(ps->_a);
+    ps->_a = NULL;
+    ps->_size = 0;
+    ps->_capacity  =0;
+
+}
+
+void SeqListInsert(SL* ps,int pos,int x)
+{
+    assert(ps);
+    assert(pos<ps->_size&& pos>=0);
+    SeqListCheckCapacity(ps);
+    int end = ps->_size-1;
+    while(end>=pos)
+    {
+        ps->_a[end+1] = ps->_a[end];
+        --end;
+    }
+    ps->_a[pos] = x;
+    ps->_size++;
+
+}
+
+
+void SeqListErase(SL* ps,int pos)
+{
+    assert(pos);
+    assert(pos->ps->_size&& pos>=0);
+
+    int start = pos;
+    while(start<ps->_size-1)
+    {
+        ps->_a[start] = ps->_a[start+1];
+        ++start;
+    }
+    ps->_size--;
+    
 }
 
 void TestSeqList()
