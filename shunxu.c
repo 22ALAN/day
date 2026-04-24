@@ -78,15 +78,39 @@ void SeqListPopBack(SL* ps)
 {
     assert(ps);
 
-    ps->size--;
+    ps->_a[ps->_size-1] = 0;
+    ps->_size--;
 
 }
 
-void SeqListPushFront(SL* ps)
+void SeqListPopFront(SL* ps)
 {
     assert(ps);
 
+    int start = 0;
+    while(start<ps->_size-1)
+    {
+        ps->_a[start] = ps->_a[start+1];
+        start++;
+    }
+
 }
+
+void SeqListPushFront(SL* ps,int x)
+{
+    assert (ps);
+
+    int end = ps->_size-1;
+    while(end>=0)
+    {
+        ps->_a[end+1] = ps->_a[end];
+        end--;
+    }
+
+    ps->_a[0] = x;
+    ps->_size++;
+}
+
 
 void SeqListDestory(SL* ps)
 {
@@ -117,7 +141,7 @@ void SeqListInsert(SL* ps,int pos,int x)
 void SeqListErase(SL* ps,int pos)
 {
     assert(pos);
-    assert(pos->ps->_size&& pos>=0);
+    assert(pos>ps->_size&& pos>=0);
 
     int start = pos;
     while(start<ps->_size-1)
@@ -127,6 +151,20 @@ void SeqListErase(SL* ps,int pos)
     }
     ps->_size--;
     
+}
+
+int SeqListFind(SL* ps,int x)
+{
+    assert(ps);
+    for(int i=0;i<ps->_size-1;i++)
+    {
+        if(ps->_a[i] == x)
+        {
+            return i;
+        }
+    }
+    return -1;
+
 }
 
 void TestSeqList()
@@ -141,6 +179,11 @@ void TestSeqList()
     SeqListPushBack(&s,6);
     SeqListPushBack(&s,7);
     SeqListPushBack(&s,8);
+    for(int i=-100;i<0;i++)
+    {
+        SeqListPushFront(&s,i);
+    }
+    SeqListPopFront(&s);
     SeqListPrint(&s);
 
 }
