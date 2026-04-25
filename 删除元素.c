@@ -40,7 +40,10 @@ int removeElement(int* nums,int numsSize,int val)
 
 int removeDuplicates(int* nums,int numsSize)
 {
-
+    if(numsSize==0)
+    {
+        return 0;
+    }
     int prev=0,cur = 1；
     
     while(cur<numsSize)
