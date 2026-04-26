@@ -78,6 +78,69 @@ void SListPopBack(SL** pphead)
     }
 }
 
+void SListPushFront(SL** pphead,int x)
+{
+    SL* newnode = BuySListNode(x);
+    newnode->next = *pphead;
+    *pphead = newnode;
+}
+
+void SListInsertAfter(SL* pos,int x)
+{
+    assert(pos);
+    SL* newnode = BuySListNode(x);
+
+    newnode->next = pos->next;
+    pos->next = newnode;
+
+}
+
+void SListEraseAfter(SL* pos)
+{
+    assert(pos);
+
+    if(pos->next)
+    {
+        SL* next = pos->next;
+        SL* nextnext = next->next;
+        pos->next = nextnext;
+        free(next);
+    }
+}
+
+void SListPopFront(SL** pphead)
+{
+    //1.空
+    //2.一个节点
+    //3.一个以上的节点
+    if(*pphead==NULL)
+    {
+        return;
+    }
+    else
+    {
+        SL* next = (*pphead)->next;
+        free(*pphead);
+
+        *pphead=next;
+
+    }
+}
+
+SL* SListFind(SL* phead,int x)
+{
+    SL* cur = phead;
+    while(cur)
+    {
+        if(cur->data==x)
+        {
+            return cur;
+        }
+        cur = cur->next;
+    }
+    return NULL;
+}
+
 void SListPushBack(SL** phead,int x)
 {
     SL* newnode = BuySListNode(x);
@@ -108,8 +171,44 @@ void TestSList()
     SListPrint(pList);
     SListPopBack(&pList);
     SListPrint(pList);
+
+    SL* pos = SListFind(pList,3);
+    if(pos)
+    {
+        pos->data = 30;
+    }
+    SListPrint(pList);
 }
 
+SL* reverseList(SL* phead)
+{
+    if(phead==NULL || phead->next ==NULL)
+    {
+        return phead;
+    }
+    SL* n1= NULL;
+    SL* n2 = phead;
+    SL* n3 = phead->next;
+
+    while(n2)
+    {
+        //反转
+        n2->next = n1;
+        
+        //迭代
+        n1 = n2;
+        n2 = n3;
+
+        if(n3)
+        {
+            
+            n3 = n3->next;
+        }
+
+    }
+    return n1;
+
+}
 
 int main(void)
 {
